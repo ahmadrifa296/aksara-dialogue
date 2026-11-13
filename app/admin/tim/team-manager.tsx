@@ -93,7 +93,7 @@ export function TeamManager({ initialMembers }: TeamManagerProps) {
         const newItem: Partial<TeamMember> = {
           ...formData,
           id: Date.now().toString(),
-          photo: null,
+          photo: formData.photo || null,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         }
@@ -179,8 +179,16 @@ export function TeamManager({ initialMembers }: TeamManagerProps) {
                 <StatusBadge status={member.is_active ? 'active' : 'inactive'} />
               </div>
 
-              <div className="h-16 w-16 rounded-full bg-primary-100 dark:bg-primary-950/60 border border-primary-200 dark:border-primary-800 flex items-center justify-center text-primary-700 dark:text-primary-300 mx-auto">
-                <User className="h-8 w-8" />
+              <div className="h-20 w-20 rounded-full overflow-hidden bg-primary-100 dark:bg-primary-950/60 border-2 border-primary-200 dark:border-primary-800 flex items-center justify-center text-primary-700 dark:text-primary-300 mx-auto shadow-sm">
+                {member.photo ? (
+                  <img
+                    src={member.photo}
+                    alt={member.name}
+                    className="w-full h-full object-cover object-center"
+                  />
+                ) : (
+                  <User className="h-10 w-10" />
+                )}
               </div>
 
               <div className="text-center space-y-1">
