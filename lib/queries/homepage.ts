@@ -323,7 +323,7 @@ const defaultNews: News[] = [
     title: 'Aksara Dialogue Rilis Rekomendasi Keterbukaan Data Publik 2026',
     slug: 'aksara-dialogue-rilis-rekomendasi-keterbukaan-data-publik-2026',
     excerpt: 'Dokumen rekomendasi kebijakan telah diserahkan secara resmi untuk memperkuat transparansi informasi anggaran daerah.',
-    content: '<p>Jakarta — Aksara Dialogue hari ini meluncurkan naskah rekomendasi kebijakan...</p>',
+    content: '<p>Jakarta, Aksara Dialogue hari ini meluncurkan naskah rekomendasi kebijakan...</p>',
     thumbnail: null,
     author: 'Tim Komunikasi Aksara',
     category_id: '1',

@@ -1,5 +1,5 @@
--- ==========================================
--- AKSARA DIALOGUE — Storage Setup
+﻿-- ==========================================
+-- AKSARA DIALOGUE : Storage Setup
 -- 003: Create storage bucket and policies
 -- ==========================================
 
@@ -43,3 +43,4 @@ CREATE POLICY "media_auth_delete" ON storage.objects
     bucket_id = 'media'
     AND auth.role() = 'authenticated'
   );
+

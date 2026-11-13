@@ -16,7 +16,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "Aksara Dialogue — Suara Publik, Ruang Dialog",
+    default: "Aksara Dialogue: Suara Publik, Ruang Dialog",
     template: "%s | Aksara Dialogue",
   },
   description:

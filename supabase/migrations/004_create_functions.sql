@@ -1,5 +1,5 @@
--- ==========================================
--- AKSARA DIALOGUE — Database Functions
+﻿-- ==========================================
+-- AKSARA DIALOGUE : Database Functions
 -- 004: Helper functions
 -- ==========================================
 
@@ -43,3 +43,4 @@ BEGIN
   RETURN result;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
+

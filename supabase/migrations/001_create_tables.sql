@@ -1,5 +1,5 @@
--- ==========================================
--- AKSARA DIALOGUE — Database Migration
+﻿-- ==========================================
+-- AKSARA DIALOGUE : Database Migration
 -- 001: Create all tables
 -- ==========================================
 
@@ -487,3 +487,4 @@ BEGIN
   END LOOP;
 END;
 $$;
+

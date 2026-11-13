@@ -315,7 +315,7 @@ export const dummyNews: News[] = [
     slug: 'aksara-dialogue-rilis-rekomendasi-keterbukaan-data-publik-2026',
     excerpt: 'Dokumen rekomendasi kebijakan telah diserahkan secara resmi untuk memperkuat transparansi informasi anggaran daerah.',
     content: `
-      <p><strong>Jakarta</strong> — Aksara Dialogue secara resmi menyerahkan naskah rekomendasi kebijakan keterbukaan data anggaran publik kepada kementerian terkait dan perwakilan komisi legislatif.</p>
+      <p><strong>Jakarta</strong>, Aksara Dialogue secara resmi menyerahkan naskah rekomendasi kebijakan keterbukaan data anggaran publik kepada kementerian terkait dan perwakilan komisi legislatif.</p>
       <p>Naskah ini disusun berdasarkan hasil audit sosial di 15 kabupaten/kota yang menunjukkan pentingnya digitalisasi informasi anggaran yang mudah diakses dan dipahami oleh warga biasa.</p>
       <p>"Keterbukaan informasi bukan sekadar kewajiban administratif, melainkan hak asasi warga untuk memastikan setiap rupiah uang rakyat digunakan secara tepat sasaran," ungkap Dr. Ahmad Fauzi, Direktur Eksekutif Aksara Dialogue.</p>
     `,

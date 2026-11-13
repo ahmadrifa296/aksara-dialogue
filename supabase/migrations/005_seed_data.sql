@@ -1,5 +1,5 @@
--- ==========================================
--- AKSARA DIALOGUE — Seed Data
+﻿-- ==========================================
+-- AKSARA DIALOGUE : Seed Data
 -- 005: Sample/seed data for initial testing
 -- NOTE: All seed data can be deleted through CMS
 -- ==========================================
@@ -221,7 +221,7 @@ INSERT INTO articles (title, slug, excerpt, content, author, category_id, status
 INSERT INTO opinions (title, slug, excerpt, content, author, category_id, status, published_at) VALUES
   ('Mengapa Dialog Publik Masih Relevan?', 'mengapa-dialog-publik-masih-relevan',
    'Di tengah polarisasi yang meningkat, dialog publik menjadi semakin penting.',
-   '<p>Di era di mana polarisasi semakin menguat dan ruang dialog semakin menyempit, kebutuhan akan dialog publik yang berkualitas justru semakin mendesak. Dialog bukan sekadar percakapan — ia adalah fondasi dari masyarakat demokratis.</p>',
+   '<p>Di era di mana polarisasi semakin menguat dan ruang dialog semakin menyempit, kebutuhan akan dialog publik yang berkualitas justru semakin mendesak. Dialog bukan sekadar percakapan : ia adalah fondasi dari masyarakat demokratis.</p>',
    'Prof. Budi Hartono', (SELECT id FROM publication_categories WHERE slug = 'perspektif'),
    'published', now() - interval '4 days'),
   ('Masyarakat Sipil dan Tantangan Baru', 'masyarakat-sipil-tantangan-baru',
@@ -239,12 +239,14 @@ INSERT INTO team_members (name, position, bio, sort_order) VALUES
 
 -- SEO Settings (default pages)
 INSERT INTO seo_settings (page_key, title, description) VALUES
-  ('home', 'Aksara Dialogue — Suara Publik, Ruang Dialog', 'Aksara Dialogue adalah organisasi yang berfokus pada ruang dialog dan gerakan sosial untuk perubahan yang bermakna.'),
-  ('about', 'Tentang Kami — Aksara Dialogue', 'Kenali lebih dekat Aksara Dialogue, organisasi yang berfokus pada dialog publik dan gerakan sosial.'),
-  ('programs', 'Program — Aksara Dialogue', 'Program-program Aksara Dialogue untuk menciptakan dampak nyata di masyarakat.'),
-  ('news', 'Berita — Aksara Dialogue', 'Ikuti perkembangan terbaru dari kegiatan dan program Aksara Dialogue.'),
-  ('contact', 'Kontak — Aksara Dialogue', 'Hubungi Aksara Dialogue untuk informasi lebih lanjut atau kerjasama.'),
-  ('team', 'Tim — Aksara Dialogue', 'Kenali tim di balik Aksara Dialogue.'),
-  ('articles', 'Artikel — Aksara Dialogue', 'Pemikiran dan analisis dari tim Aksara Dialogue tentang isu-isu terkini.'),
-  ('opinions', 'Opini — Aksara Dialogue', 'Opini dan perspektif dari kontributor Aksara Dialogue.'),
-  ('reports', 'Laporan — Aksara Dialogue', 'Laporan dan publikasi dari Aksara Dialogue.');
+  ('home', 'Aksara Dialogue: Suara Publik, Ruang Dialog', 'Aksara Dialogue adalah organisasi yang berfokus pada ruang dialog dan gerakan sosial untuk perubahan yang bermakna.'),
+  ('about', 'Tentang Kami - Aksara Dialogue', 'Kenali lebih dekat Aksara Dialogue, organisasi yang berfokus pada dialog publik dan gerakan sosial.'),
+  ('programs', 'Program - Aksara Dialogue', 'Program-program Aksara Dialogue untuk menciptakan dampak nyata di masyarakat.'),
+  ('news', 'Berita - Aksara Dialogue', 'Ikuti perkembangan terbaru dari kegiatan dan program Aksara Dialogue.'),
+  ('contact', 'Kontak - Aksara Dialogue', 'Hubungi Aksara Dialogue untuk informasi lebih lanjut atau kerjasama.'),
+  ('team', 'Tim - Aksara Dialogue', 'Kenali tim di balik Aksara Dialogue.'),
+  ('articles', 'Artikel - Aksara Dialogue', 'Pemikiran dan analisis dari tim Aksara Dialogue tentang isu-isu terkini.'),
+  ('opinions', 'Opini - Aksara Dialogue', 'Opini dan perspektif dari kontributor Aksara Dialogue.'),
+  ('reports', 'Laporan - Aksara Dialogue', 'Laporan dan publikasi dari Aksara Dialogue.');
+
+
