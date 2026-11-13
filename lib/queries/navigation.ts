@@ -151,33 +151,39 @@ const defaultNavigation: Navigation[] = [
   },
 ]
 
+function isSupabaseConfigured(): boolean {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  return !!(
+    supabaseUrl &&
+    supabaseUrl.startsWith('http') &&
+    !supabaseUrl.includes('your_supabase_url_here') &&
+    supabaseAnonKey &&
+    !supabaseAnonKey.includes('your_supabase_anon_key_here')
+  )
+}
+
 export async function getNavigations(): Promise<Navigation[]> {
-  try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    if (!supabaseUrl || !supabaseUrl.startsWith('http')) {
-      return defaultNavigation
-    }
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createClient()
+      const { data, error } = await supabase
+        .from('navigation')
+        .select('*')
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true })
 
-    const supabase = await createClient()
-    const { data, error } = await supabase
-      .from('navigation')
-      .select('*')
-      .eq('is_active', true)
-      .order('sort_order', { ascending: true })
-
-    if (error || !data || data.length === 0) {
-      return defaultNavigation
-    }
-
-    // Build hierarchy parent-children
-    const parents = data.filter((item) => !item.parent_id)
-    return parents.map((parent) => ({
-      ...parent,
-      children: data.filter((item) => item.parent_id === parent.id),
-    }))
-  } catch {
-    return defaultNavigation
+      if (!error && data && data.length > 0) {
+        const parents = data.filter((item) => !item.parent_id)
+        return parents.map((parent) => ({
+          ...parent,
+          children: data.filter((item) => item.parent_id === parent.id),
+        }))
+      }
+    } catch {}
   }
+
+  return defaultNavigation
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {
@@ -193,7 +199,16 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     updated_at: new Date().toISOString(),
   }
 
-  // Check persistent local file store first
+  // 1. Check Supabase first if connected
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createClient()
+      const { data, error } = await supabase.from('site_settings').select('*').single()
+      if (!error && data) return { ...fallback, ...data }
+    } catch {}
+  }
+
+  // 2. Check persistent local file store fallback
   try {
     const { getLocalRecord } = await import('@/lib/local-store')
     const local = getLocalRecord<SiteSettings>('site_settings')
@@ -202,18 +217,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     }
   } catch {}
 
-  try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    if (!supabaseUrl || !supabaseUrl.startsWith('http')) {
-      return fallback
-    }
-
-    const supabase = await createClient()
-    const { data } = await supabase.from('site_settings').select('*').single()
-    return data ? { ...fallback, ...data } : fallback
-  } catch {
-    return fallback
-  }
+  return fallback
 }
 
 export async function getFooterSettings(): Promise<FooterSettings> {
@@ -230,7 +234,16 @@ export async function getFooterSettings(): Promise<FooterSettings> {
     updated_at: new Date().toISOString(),
   }
 
-  // Check persistent local file store first
+  // 1. Check Supabase first if connected
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createClient()
+      const { data, error } = await supabase.from('footer_settings').select('*').single()
+      if (!error && data) return { ...fallback, ...data }
+    } catch {}
+  }
+
+  // 2. Check persistent local file store fallback
   try {
     const { getLocalRecord } = await import('@/lib/local-store')
     const localFooter = getLocalRecord<FooterSettings>('footer_settings')
@@ -247,18 +260,7 @@ export async function getFooterSettings(): Promise<FooterSettings> {
     }
   } catch {}
 
-  try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    if (!supabaseUrl || !supabaseUrl.startsWith('http')) {
-      return fallback
-    }
-
-    const supabase = await createClient()
-    const { data } = await supabase.from('footer_settings').select('*').single()
-    return data ? { ...fallback, ...data } : fallback
-  } catch {
-    return fallback
-  }
+  return fallback
 }
 
 export async function getSocialLinks(): Promise<SocialLink[]> {
@@ -269,21 +271,18 @@ export async function getSocialLinks(): Promise<SocialLink[]> {
     { id: '4', platform: 'twitter', url: 'https://twitter.com/aksaradialogue', is_active: true, sort_order: 4, created_at: '', updated_at: '' },
   ]
 
-  try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    if (!supabaseUrl || !supabaseUrl.startsWith('http')) {
-      return fallback
-    }
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createClient()
+      const { data, error } = await supabase
+        .from('social_links')
+        .select('*')
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true })
 
-    const supabase = await createClient()
-    const { data } = await supabase
-      .from('social_links')
-      .select('*')
-      .eq('is_active', true)
-      .order('sort_order', { ascending: true })
-
-    return data && data.length > 0 ? data : fallback
-  } catch {
-    return fallback
+      if (!error && data && data.length > 0) return data
+    } catch {}
   }
+
+  return fallback
 }

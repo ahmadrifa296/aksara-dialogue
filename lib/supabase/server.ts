@@ -40,3 +40,13 @@ export async function createServiceClient() {
     }
   )
 }
+
+export async function getDbClient() {
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (serviceKey && !serviceKey.includes('your_service_role_key_here')) {
+    try {
+      return await createServiceClient()
+    } catch {}
+  }
+  return createClient()
+}

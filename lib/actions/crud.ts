@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { getDbClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { getLocalDb, saveLocalDb, setLocalRecord } from '@/lib/local-store'
 
@@ -56,16 +56,19 @@ export async function createRecord(
       return { success: true, message: 'Data berhasil disimpan!', data: newRecord }
     }
 
-    const supabase = await createClient()
+    const supabase = await getDbClient()
     const { data: inserted, error } = await supabase.from(table).insert([data]).select().single()
 
-    if (error) throw error
+    if (error) {
+      console.error(`Supabase insert error on ${table}:`, error)
+      throw new Error(error.message || 'Gagal menyimpan ke Supabase')
+    }
 
     revalidatePaths.forEach((path) => {
       revalidatePath(path, 'layout')
       revalidatePath(path, 'page')
     })
-    return { success: true, message: 'Data berhasil ditambahkan!', data: inserted }
+    return { success: true, message: 'Data berhasil ditambahkan ke Supabase!', data: inserted }
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Gagal menambahkan data'
     return { success: false, message }
@@ -117,16 +120,19 @@ export async function updateRecord(
       return { success: true, message: 'Data berhasil diperbarui!', data }
     }
 
-    const supabase = await createClient()
+    const supabase = await getDbClient()
     const { data: updated, error } = await supabase.from(table).update(data).eq('id', id).select().single()
 
-    if (error) throw error
+    if (error) {
+      console.error(`Supabase update error on ${table} [${id}]:`, error)
+      throw new Error(error.message || 'Gagal memperbarui data di Supabase')
+    }
 
     revalidatePaths.forEach((path) => {
       revalidatePath(path, 'layout')
       revalidatePath(path, 'page')
     })
-    return { success: true, message: 'Data berhasil diperbarui!', data: updated }
+    return { success: true, message: 'Data berhasil diperbarui di Supabase!', data: updated }
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Gagal memperbarui data'
     return { success: false, message }
@@ -163,16 +169,19 @@ export async function deleteRecord(
       return { success: true, message: 'Data berhasil dihapus!' }
     }
 
-    const supabase = await createClient()
+    const supabase = await getDbClient()
     const { error } = await supabase.from(table).delete().eq('id', id)
 
-    if (error) throw error
+    if (error) {
+      console.error(`Supabase delete error on ${table} [${id}]:`, error)
+      throw new Error(error.message || 'Gagal menghapus data dari Supabase')
+    }
 
     revalidatePaths.forEach((path) => {
       revalidatePath(path, 'layout')
       revalidatePath(path, 'page')
     })
-    return { success: true, message: 'Data berhasil dihapus!' }
+    return { success: true, message: 'Data berhasil dihapus dari Supabase!' }
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Gagal menghapus data'
     return { success: false, message }

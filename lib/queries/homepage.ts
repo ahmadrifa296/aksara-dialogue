@@ -572,6 +572,32 @@ export async function getHomepageData(): Promise<HomepageData> {
       .limit(3)
     if (articlesData && articlesData.length > 0) result.articles = articlesData
 
+    // Fetch About Profile
+    const { data: aboutData } = await supabase
+      .from('about')
+      .select('*')
+      .eq('page_type', 'profile')
+      .eq('is_published', true)
+      .single()
+    if (aboutData) result.about = aboutData
+
+    // Fetch Values
+    const { data: valuesData } = await supabase
+      .from('values')
+      .select('*')
+      .eq('is_active', true)
+      .order('sort_order', { ascending: true })
+    if (valuesData && valuesData.length > 0) result.values = valuesData
+
+    // Fetch Events
+    const { data: eventsData } = await supabase
+      .from('events')
+      .select('*')
+      .eq('is_published', true)
+      .order('event_date', { ascending: true })
+      .limit(3)
+    if (eventsData && eventsData.length > 0) result.events = eventsData
+
     return result
   } catch {
     return result

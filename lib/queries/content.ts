@@ -516,20 +516,31 @@ export const dummyAlbums: Album[] = [
 ]
 
 export async function getMergedRecords<T>(table: string, defaultRecords: T[]): Promise<T[]> {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const isSupabase = !!(
+    supabaseUrl &&
+    supabaseUrl.startsWith('http') &&
+    !supabaseUrl.includes('your_supabase_url_here') &&
+    supabaseAnonKey &&
+    !supabaseAnonKey.includes('your_supabase_anon_key_here')
+  )
+
+  // 1. Check Supabase first if connected
+  if (isSupabase) {
+    try {
+      const supabase = await createClient()
+      const { data, error } = await supabase.from(table).select('*')
+      if (!error && data && data.length > 0) return data as unknown as T[]
+    } catch {}
+  }
+
+  // 2. Fallback to local persistent store
   try {
     const { getLocalDb } = await import('@/lib/local-store')
     const db = getLocalDb()
     if (db.records && db.records[table] && db.records[table].length > 0) {
       return db.records[table] as unknown as T[]
-    }
-  } catch {}
-
-  try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    if (supabaseUrl && supabaseUrl.startsWith('http')) {
-      const supabase = await createClient()
-      const { data } = await supabase.from(table).select('*')
-      if (data && data.length > 0) return data as unknown as T[]
     }
   } catch {}
 

@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { getDbClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { getLocalDb, saveLocalDb } from '@/lib/local-store'
 import type { HomepageSection } from '@/types'
@@ -60,7 +60,7 @@ export async function updateHomepageSection(section: Partial<HomepageSection> & 
       return { success: true, message: 'Section homepage berhasil diperbarui & langsung aktif di landing page!' }
     }
 
-    const supabase = await createClient()
+    const supabase = await getDbClient()
     const { error } = await supabase
       .from('homepage_sections')
       .upsert(
@@ -81,12 +81,15 @@ export async function updateHomepageSection(section: Partial<HomepageSection> & 
         { onConflict: 'section_key' }
       )
 
-    if (error) throw error
+    if (error) {
+      console.error('Supabase homepage upsert error:', error)
+      throw new Error(error.message || 'Gagal menyimpan ke Supabase')
+    }
 
     revalidatePath('/', 'layout')
     revalidatePath('/', 'page')
     revalidatePath('/admin/homepage', 'page')
-    return { success: true, message: 'Section homepage berhasil diperbarui & langsung aktif di landing page!' }
+    return { success: true, message: 'Section homepage berhasil diperbarui di Supabase & langsung aktif!' }
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Terjadi kesalahan saat menyimpan section'
     return { success: false, message }
