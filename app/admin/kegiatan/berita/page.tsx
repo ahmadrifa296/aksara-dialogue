@@ -9,6 +9,9 @@ const defaultCategories: NewsCategory[] = [
   { id: '3', name: 'Kabar Advokasi', slug: 'kabar-advokasi', is_active: true, sort_order: 3, created_at: '' },
 ]
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function AdminNewsPage() {
   const [news, categories] = await Promise.all([
     getTableData<News>('news', dummyNews),

@@ -33,11 +33,15 @@ export function getLocalDb(): LocalDb {
   return {}
 }
 
-export function saveLocalDb(data: LocalDb) {
-  ensureDataDir()
+export function saveLocalDb(data: LocalDb): boolean {
   try {
+    ensureDataDir()
     fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8')
-  } catch {}
+    return true
+  } catch (err) {
+    console.error('Failed to save to local-db.json:', err)
+    return false
+  }
 }
 
 export function getLocalRecord<T = Record<string, unknown>>(key: keyof LocalDb): T | null {
@@ -45,11 +49,11 @@ export function getLocalRecord<T = Record<string, unknown>>(key: keyof LocalDb):
   return (db[key] as T) || null
 }
 
-export function setLocalRecord(key: keyof LocalDb, value: unknown) {
+export function setLocalRecord(key: keyof LocalDb, value: unknown): boolean {
   const db = getLocalDb()
   // @ts-expect-error dynamic assignment
   db[key] = value
-  saveLocalDb(db)
+  return saveLocalDb(db)
 }
 
 export const saveLocalRecord = setLocalRecord

@@ -9,6 +9,9 @@ const defaultCategories: PublicationCategory[] = [
   { id: '3', name: 'Kolom Opini', slug: 'kolom-opini', type: 'opinion', is_active: true, sort_order: 3, created_at: '' },
 ]
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function AdminArticlesPage() {
   const [articles, categories] = await Promise.all([
     getTableData<Article>('articles', dummyArticles),

@@ -10,20 +10,45 @@ export interface ActionResult<T = unknown> {
   data?: T
 }
 
+function checkSupabaseConfigured(): boolean {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  return !!(
+    supabaseUrl &&
+    supabaseUrl.startsWith('http') &&
+    !supabaseUrl.includes('your_supabase_url_here') &&
+    supabaseAnonKey &&
+    !supabaseAnonKey.includes('your_supabase_anon_key_here')
+  )
+}
+
 export async function createRecord(
   table: string,
   data: Record<string, unknown>,
   revalidatePaths: string[] = ['/', '/admin']
 ): Promise<ActionResult> {
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    if (!supabaseUrl || !supabaseUrl.startsWith('http')) {
+    const isSupabase = checkSupabaseConfigured()
+
+    if (!isSupabase) {
+      if (process.env.VERCEL) {
+        return {
+          success: false,
+          message:
+            'Website online di Vercel membutuhkan database online (Supabase). Silakan hubungkan Supabase di Environment Variables Vercel.',
+        }
+      }
+
       const db = getLocalDb()
       if (!db.records) db.records = {}
       if (!db.records[table]) db.records[table] = []
       const newRecord = { ...data, id: Date.now().toString(), created_at: new Date().toISOString() }
       db.records[table].push(newRecord)
-      saveLocalDb(db)
+      const ok = saveLocalDb(db)
+      if (!ok) {
+        return { success: false, message: 'Gagal menulis data ke database lokal.' }
+      }
+
       revalidatePaths.forEach((path) => {
         revalidatePath(path, 'layout')
         revalidatePath(path, 'page')
@@ -54,12 +79,23 @@ export async function updateRecord(
   revalidatePaths: string[] = ['/', '/admin']
 ): Promise<ActionResult> {
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    if (!supabaseUrl || !supabaseUrl.startsWith('http')) {
+    const isSupabase = checkSupabaseConfigured()
+
+    if (!isSupabase) {
+      if (process.env.VERCEL) {
+        return {
+          success: false,
+          message:
+            'Website online di Vercel membutuhkan database online (Supabase). Silakan hubungkan Supabase di Environment Variables Vercel.',
+        }
+      }
+
       if (table === 'site_settings') {
-        setLocalRecord('site_settings', data)
+        const ok = setLocalRecord('site_settings', data)
+        if (!ok) return { success: false, message: 'Gagal memperbarui pengaturan website lokal.' }
       } else if (table === 'footer_settings') {
-        setLocalRecord('footer_settings', data)
+        const ok = setLocalRecord('footer_settings', data)
+        if (!ok) return { success: false, message: 'Gagal memperbarui pengaturan footer lokal.' }
       } else {
         const db = getLocalDb()
         if (!db.records) db.records = {}
@@ -70,7 +106,8 @@ export async function updateRecord(
         } else {
           db.records[table].push({ ...data, id })
         }
-        saveLocalDb(db)
+        const ok = saveLocalDb(db)
+        if (!ok) return { success: false, message: 'Gagal menulis pembaruan ke database lokal.' }
       }
 
       revalidatePaths.forEach((path) => {
@@ -102,12 +139,22 @@ export async function deleteRecord(
   revalidatePaths: string[] = ['/', '/admin']
 ): Promise<ActionResult> {
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    if (!supabaseUrl || !supabaseUrl.startsWith('http')) {
+    const isSupabase = checkSupabaseConfigured()
+
+    if (!isSupabase) {
+      if (process.env.VERCEL) {
+        return {
+          success: false,
+          message:
+            'Website online di Vercel membutuhkan database online (Supabase). Silakan hubungkan Supabase di Environment Variables Vercel.',
+        }
+      }
+
       const db = getLocalDb()
       if (db.records && db.records[table]) {
         db.records[table] = db.records[table].filter((r) => r.id !== id)
-        saveLocalDb(db)
+        const ok = saveLocalDb(db)
+        if (!ok) return { success: false, message: 'Gagal menghapus data dari database lokal.' }
       }
       revalidatePaths.forEach((path) => {
         revalidatePath(path, 'layout')

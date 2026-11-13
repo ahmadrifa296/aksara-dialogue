@@ -8,6 +8,9 @@ const defaultCategories: PublicationCategory[] = [
   { id: '2', name: 'Kajian Kebijakan', slug: 'kajian-kebijakan', type: 'report', is_active: true, sort_order: 2, created_at: '' },
 ]
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function AdminReportsPage() {
   const [reports, categories] = await Promise.all([
     getTableData<Report>('reports', dummyReports),

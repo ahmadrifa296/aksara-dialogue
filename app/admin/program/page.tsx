@@ -9,6 +9,9 @@ const defaultCategories: ProgramCategory[] = [
   { id: '3', name: 'Gerakan Lingkungan', slug: 'gerakan-lingkungan', description: null, image_url: null, is_active: true, sort_order: 3, created_at: '', updated_at: '' },
 ]
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function AdminProgramsPage() {
   const [programs, categories] = await Promise.all([
     getTableData<Program>('programs', dummyPrograms),
