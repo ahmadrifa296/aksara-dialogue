@@ -2,14 +2,17 @@ import { getDbClient } from '@/lib/supabase/server'
 import { getLocalDb } from '@/lib/local-store'
 
 function isSupabaseConfigured(): boolean {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
+  const supabaseKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    process.env.SUPABASE_ANON_KEY
   return !!(
     supabaseUrl &&
     supabaseUrl.startsWith('http') &&
     !supabaseUrl.includes('your_supabase_url_here') &&
-    supabaseAnonKey &&
-    !supabaseAnonKey.includes('your_supabase_anon_key_here')
+    supabaseKey &&
+    !supabaseKey.includes('your_')
   )
 }
 
