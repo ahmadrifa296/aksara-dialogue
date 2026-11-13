@@ -46,9 +46,12 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  // Cek cookie sesi admin demo / developer
+  const isDemoAdmin = request.cookies.get('admin_demo_session')?.value === 'true'
+
   // If accessing admin routes and not logged in, redirect to login
   if (request.nextUrl.pathname.startsWith('/admin') && !request.nextUrl.pathname.startsWith('/admin/login')) {
-    if (!user) {
+    if (!user && !isDemoAdmin) {
       const url = request.nextUrl.clone()
       url.pathname = '/admin/login'
       return NextResponse.redirect(url)
