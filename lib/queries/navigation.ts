@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { getDbClient } from '@/lib/supabase/server'
 import type { Navigation, SiteSettings, FooterSettings, SocialLink } from '@/types'
 
 const defaultNavigation: Navigation[] = [
@@ -166,7 +166,7 @@ function isSupabaseConfigured(): boolean {
 export async function getNavigations(): Promise<Navigation[]> {
   if (isSupabaseConfigured()) {
     try {
-      const supabase = await createClient()
+      const supabase = await getDbClient()
       const { data, error } = await supabase
         .from('navigation')
         .select('*')
@@ -202,7 +202,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   // 1. Check Supabase first if connected
   if (isSupabaseConfigured()) {
     try {
-      const supabase = await createClient()
+      const supabase = await getDbClient()
       const { data, error } = await supabase.from('site_settings').select('*').single()
       if (!error && data) return { ...fallback, ...data }
     } catch {}
@@ -237,7 +237,7 @@ export async function getFooterSettings(): Promise<FooterSettings> {
   // 1. Check Supabase first if connected
   if (isSupabaseConfigured()) {
     try {
-      const supabase = await createClient()
+      const supabase = await getDbClient()
       const { data, error } = await supabase.from('footer_settings').select('*').single()
       if (!error && data) return { ...fallback, ...data }
     } catch {}
@@ -273,7 +273,7 @@ export async function getSocialLinks(): Promise<SocialLink[]> {
 
   if (isSupabaseConfigured()) {
     try {
-      const supabase = await createClient()
+      const supabase = await getDbClient()
       const { data, error } = await supabase
         .from('social_links')
         .select('*')

@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { getDbClient } from '@/lib/supabase/server'
 import { getLocalDb } from '@/lib/local-store'
 
 function isSupabaseConfigured(): boolean {
@@ -17,13 +17,13 @@ export async function getTableData<T>(table: string, fallback: T[]): Promise<T[]
   // 1. Check Supabase first if connected
   if (isSupabaseConfigured()) {
     try {
-      const supabase = await createClient()
+      const supabase = await getDbClient()
       const { data, error } = await supabase.from(table).select('*').order('sort_order', { ascending: true })
       if (!error && data && data.length > 0) return data as unknown as T[]
     } catch {
       // Fallback if table doesn't have sort_order
       try {
-        const supabase = await createClient()
+        const supabase = await getDbClient()
         const { data, error } = await supabase.from(table).select('*')
         if (!error && data && data.length > 0) return data as unknown as T[]
       } catch {}
@@ -50,7 +50,7 @@ export async function getSingleRecord<T>(
   // 1. Check Supabase first if connected
   if (isSupabaseConfigured()) {
     try {
-      const supabase = await createClient()
+      const supabase = await getDbClient()
       let query = supabase.from(table).select('*')
       if (filterKey && filterValue !== undefined) {
         query = query.eq(filterKey, filterValue)

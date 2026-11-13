@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { getLocalDb, saveLocalDb, saveLocalRecord } from '@/lib/local-store'
 import { sendContactEmail, getEffectiveSmtpConfig, SmtpConfig } from '@/lib/services/mail'
-import { createClient } from '@/lib/supabase/server'
+import { getDbClient } from '@/lib/supabase/server'
 import nodemailer from 'nodemailer'
 
 export interface ContactMessage {
@@ -51,7 +51,7 @@ export async function sendContactMessage(formData: {
     try {
       const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
       if (supabaseUrl && supabaseUrl.startsWith('http')) {
-        const supabase = await createClient()
+        const supabase = await getDbClient()
         await supabase.from('contact_messages').insert([
           {
             name: newMessage.name,

@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { getDbClient } from '@/lib/supabase/server'
 import { dummyEvents } from '@/lib/queries/content'
 import type {
   HomepageSection,
@@ -521,7 +521,7 @@ export async function getHomepageData(): Promise<HomepageData> {
       return result
     }
 
-    const supabase = await createClient()
+    const supabase = await getDbClient()
 
     // Fetch Sections
     const { data: sectionsData } = await supabase

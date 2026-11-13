@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { getDbClient } from '@/lib/supabase/server'
 import type {
   About,
   VisiMisi,
@@ -529,7 +529,7 @@ export async function getMergedRecords<T>(table: string, defaultRecords: T[]): P
   // 1. Check Supabase first if connected
   if (isSupabase) {
     try {
-      const supabase = await createClient()
+      const supabase = await getDbClient()
       const { data, error } = await supabase.from(table).select('*')
       if (!error && data && data.length > 0) return data as unknown as T[]
     } catch {}
