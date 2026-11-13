@@ -1,4 +1,4 @@
-﻿-- ==========================================
+-- ==========================================
 -- AKSARA DIALOGUE : Seed Data
 -- 005: Sample/seed data for initial testing
 -- NOTE: All seed data can be deleted through CMS

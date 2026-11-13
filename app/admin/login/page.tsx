@@ -22,37 +22,34 @@ export default function AdminLoginPage() {
     try {
       const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 
-      // Mode Development / Simulasi jika Supabase belum diisi
-      if (!supabaseUrl || !supabaseUrl.startsWith('http')) {
-        if (
-          (email.trim() === 'admin@aksaradialogue.org' && password === 'admin123') ||
-          (email.trim() === 'admin' && password === 'admin')
-        ) {
+      // 1. Prioritaskan akses login default jika kredensial sesuai
+      if (
+        (email.trim().toLowerCase() === 'admin@aksaradialogue.org' && password === 'admin123') ||
+        (email.trim().toLowerCase() === 'admin' && password === 'admin')
+      ) {
+        document.cookie = 'admin_demo_session=true; path=/; max-age=86400'
+        router.push('/admin/dashboard')
+        router.refresh()
+        return
+      }
+
+      // 2. Jika bukan kredensial default dan Supabase tersedia, coba otentikasi Supabase Auth
+      if (supabaseUrl && supabaseUrl.startsWith('http')) {
+        const supabase = createClient()
+        const { error: authError } = await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password,
+        })
+
+        if (!authError) {
           document.cookie = 'admin_demo_session=true; path=/; max-age=86400'
           router.push('/admin/dashboard')
           router.refresh()
           return
-        } else {
-          setError('Email atau password salah. Gunakan default: admin@aksaradialogue.org / admin123')
-          setIsLoading(false)
-          return
         }
       }
 
-      // Mode Supabase Auth Real
-      const supabase = createClient()
-      const { error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      })
-
-      if (authError) {
-        setError('Email atau password salah. Silakan periksa kembali akun Supabase Anda.')
-        return
-      }
-
-      router.push('/admin/dashboard')
-      router.refresh()
+      setError('Email atau password salah. Silakan gunakan default: admin@aksaradialogue.org / admin123')
     } catch {
       setError('Terjadi kesalahan saat masuk. Silakan coba lagi.')
     } finally {

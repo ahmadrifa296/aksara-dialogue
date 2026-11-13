@@ -15,8 +15,11 @@ export function AdminHeader({ onMenuToggle }: AdminHeaderProps) {
 
   const handleLogout = async () => {
     setIsLoggingOut(true)
-    const supabase = createClient()
-    await supabase.auth.signOut()
+    document.cookie = 'admin_demo_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+    try {
+      const supabase = createClient()
+      await supabase.auth.signOut()
+    } catch {}
     router.push('/admin/login')
   }
 
