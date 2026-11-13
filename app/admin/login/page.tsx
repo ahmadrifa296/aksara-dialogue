@@ -9,8 +9,8 @@ import { Info, Lock } from 'lucide-react'
 
 export default function AdminLoginPage() {
   const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('admin@aksaradialogue.org')
+  const [password, setPassword] = useState('admin123')
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -20,16 +20,17 @@ export default function AdminLoginPage() {
     setIsLoading(true)
 
     try {
+      const activeEmail = (email || 'admin@aksaradialogue.org').trim()
+      const activePassword = password || 'admin123'
       const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 
       // 1. Prioritaskan akses login default jika kredensial sesuai
       if (
-        (email.trim().toLowerCase() === 'admin@aksaradialogue.org' && password === 'admin123') ||
-        (email.trim().toLowerCase() === 'admin' && password === 'admin')
+        (activeEmail.toLowerCase() === 'admin@aksaradialogue.org' && activePassword === 'admin123') ||
+        (activeEmail.toLowerCase() === 'admin' && activePassword === 'admin')
       ) {
         document.cookie = 'admin_demo_session=true; path=/; max-age=86400'
-        router.push('/admin/dashboard')
-        router.refresh()
+        window.location.href = '/admin/dashboard'
         return
       }
 
@@ -37,14 +38,13 @@ export default function AdminLoginPage() {
       if (supabaseUrl && supabaseUrl.startsWith('http')) {
         const supabase = createClient()
         const { error: authError } = await supabase.auth.signInWithPassword({
-          email: email.trim(),
-          password,
+          email: activeEmail,
+          password: activePassword,
         })
 
         if (!authError) {
           document.cookie = 'admin_demo_session=true; path=/; max-age=86400'
-          router.push('/admin/dashboard')
-          router.refresh()
+          window.location.href = '/admin/dashboard'
           return
         }
       }

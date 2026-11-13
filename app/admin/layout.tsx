@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { AdminSidebar } from '@/components/admin/sidebar'
 import { AdminHeader } from '@/components/admin/header'
 import { ToastProvider } from '@/components/ui/toast-provider'
@@ -11,6 +12,12 @@ export default function AdminLayout({
   children: React.ReactNode
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const pathname = usePathname()
+
+  // Jangan tampilkan sidebar dan header pada halaman login
+  if (pathname === '/admin/login') {
+    return <ToastProvider>{children}</ToastProvider>
+  }
 
   return (
     <ToastProvider>
