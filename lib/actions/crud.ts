@@ -57,7 +57,14 @@ export async function createRecord(
     }
 
     const supabase = await getDbClient()
-    const { data: inserted, error } = await supabase.from(table).insert([data]).select().single()
+    const { id: potentialId, ...cleanData } = data
+    // Supabase auto-generates UUID, only pass id if it is already a valid UUID
+    const insertPayload =
+      potentialId && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(potentialId))
+        ? { ...cleanData, id: potentialId }
+        : cleanData
+
+    const { data: inserted, error } = await supabase.from(table).insert([insertPayload]).select().single()
 
     if (error) {
       console.error(`Supabase insert error on ${table}:`, error)
@@ -121,7 +128,47 @@ export async function updateRecord(
     }
 
     const supabase = await getDbClient()
-    const { data: updated, error } = await supabase.from(table).update(data).eq('id', id).select().single()
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)
+
+    // Jika id bukan UUID (misal data dummy "1", "2"), lakukan insert ke Supabase sebagai baris baru
+    if (!isUuid) {
+      const { id: _ignored, ...cleanData } = data
+      const { data: inserted, error: insertError } = await supabase
+        .from(table)
+        .insert([cleanData])
+        .select()
+        .single()
+
+      if (insertError) {
+        console.error(`Supabase fallback insert error on ${table}:`, insertError)
+        throw new Error(insertError.message || 'Gagal menyimpan ke Supabase')
+      }
+
+      // Perbarui juga cache lokal
+      try {
+        const db = getLocalDb()
+        if (db.records && db.records[table]) {
+          db.records[table] = db.records[table].filter((r) => r.id !== id)
+          db.records[table].push(inserted)
+          saveLocalDb(db)
+        }
+      } catch {}
+
+      revalidatePaths.forEach((path) => {
+        revalidatePath(path, 'layout')
+        revalidatePath(path, 'page')
+      })
+      return { success: true, message: 'Data berhasil disimpan ke Supabase!', data: inserted }
+    }
+
+    // ID sudah valid UUID, lakukan update normal
+    const { id: _ignoredId, ...updateData } = data
+    const { data: updated, error } = await supabase
+      .from(table)
+      .update(updateData)
+      .eq('id', id)
+      .select()
+      .single()
 
     if (error) {
       console.error(`Supabase update error on ${table} [${id}]:`, error)
@@ -162,6 +209,22 @@ export async function deleteRecord(
         const ok = saveLocalDb(db)
         if (!ok) return { success: false, message: 'Gagal menghapus data dari database lokal.' }
       }
+      revalidatePaths.forEach((path) => {
+        revalidatePath(path, 'layout')
+        revalidatePath(path, 'page')
+      })
+      return { success: true, message: 'Data berhasil dihapus!' }
+    }
+
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)
+    if (!isUuid) {
+      try {
+        const db = getLocalDb()
+        if (db.records && db.records[table]) {
+          db.records[table] = db.records[table].filter((r) => r.id !== id)
+          saveLocalDb(db)
+        }
+      } catch {}
       revalidatePaths.forEach((path) => {
         revalidatePath(path, 'layout')
         revalidatePath(path, 'page')
