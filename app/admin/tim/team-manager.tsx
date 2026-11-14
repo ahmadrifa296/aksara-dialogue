@@ -12,7 +12,13 @@ import { StatusBadge } from '@/components/ui/badge'
 import { ImageUploader } from '@/components/ui/image-uploader'
 import { useToast } from '@/components/ui/toast-provider'
 import { createRecord, updateRecord, deleteRecord } from '@/lib/actions/crud'
-import { Plus, Edit2, Trash2, User, Mail, Globe, Share2 } from 'lucide-react'
+import { Plus, Edit2, Trash2, User, Mail } from 'lucide-react'
+import {
+  InstagramIcon,
+  LinkedInIcon,
+  formatInstagramUrl,
+  formatLinkedinUrl,
+} from '@/components/ui/social-icons'
 import type { TeamMember } from '@/types'
 
 interface TeamManagerProps {
@@ -204,9 +210,37 @@ export function TeamManager({ initialMembers }: TeamManagerProps) {
               </div>
 
               <div className="pt-2 flex items-center justify-center gap-3 text-neutral-400">
-                {member.email && <Mail className="h-3.5 w-3.5 hover:text-primary-600" />}
-                {member.instagram && <Globe className="h-3.5 w-3.5 hover:text-primary-600" />}
-                {member.linkedin && <Share2 className="h-3.5 w-3.5 hover:text-primary-600" />}
+                {member.email && (
+                  <a
+                    href={`mailto:${member.email}`}
+                    title={`Email: ${member.email}`}
+                    className="hover:text-primary-600 transition-colors"
+                  >
+                    <Mail className="h-3.5 w-3.5" />
+                  </a>
+                )}
+                {member.instagram && (
+                  <a
+                    href={formatInstagramUrl(member.instagram)}
+                    target="_blank"
+                    rel="noreferrer"
+                    title={`Instagram: ${member.instagram}`}
+                    className="hover:text-primary-600 transition-colors"
+                  >
+                    <InstagramIcon className="h-3.5 w-3.5" />
+                  </a>
+                )}
+                {member.linkedin && (
+                  <a
+                    href={formatLinkedinUrl(member.linkedin)}
+                    target="_blank"
+                    rel="noreferrer"
+                    title={`LinkedIn: ${member.linkedin}`}
+                    className="hover:text-primary-600 transition-colors"
+                  >
+                    <LinkedInIcon className="h-3.5 w-3.5" />
+                  </a>
+                )}
               </div>
             </div>
 

@@ -1,13 +1,20 @@
 import { getTableData } from '@/lib/queries/db'
 import { dummyTeam } from '@/lib/queries/content'
-import { Users2, Mail, Globe, User } from 'lucide-react'
+import { Users2, Mail, User } from 'lucide-react'
+import {
+  InstagramIcon,
+  LinkedInIcon,
+  formatInstagramUrl,
+  formatLinkedinUrl,
+} from '@/components/ui/social-icons'
 import type { TeamMember } from '@/types'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export default async function TeamPublicPage() {
-  const team = await getTableData<TeamMember>('team_members', dummyTeam)
+  const allTeam = await getTableData<TeamMember>('team_members', dummyTeam)
+  const team = allTeam.filter((m) => m.is_active !== false)
 
   return (
     <div className="pt-32 pb-24 bg-white dark:bg-neutral-950">
@@ -62,30 +69,35 @@ export default async function TeamPublicPage() {
                 {member.email && (
                   <a
                     href={`mailto:${member.email}`}
-                    className="p-2 rounded-lg text-neutral-500 hover:text-primary-700 dark:hover:text-primary-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
-                    title={member.email}
+                    className="p-2 rounded-lg text-neutral-500 hover:text-primary-700 dark:hover:text-primary-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                    title={`Email: ${member.email}`}
+                    aria-label={`Email ${member.name}`}
                   >
                     <Mail className="h-4 w-4" />
                   </a>
                 )}
                 {member.linkedin && (
                   <a
-                    href={`https://linkedin.com/${member.linkedin.replace(/^in\//, 'in/')}`}
+                    href={formatLinkedinUrl(member.linkedin)}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2 rounded-lg text-neutral-500 hover:text-primary-700 dark:hover:text-primary-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                    className="p-2 rounded-lg text-neutral-500 hover:text-primary-700 dark:hover:text-primary-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                    title="LinkedIn"
+                    aria-label={`LinkedIn ${member.name}`}
                   >
-                    <Globe className="h-4 w-4" />
+                    <LinkedInIcon className="h-4 w-4" />
                   </a>
                 )}
                 {member.instagram && (
                   <a
-                    href={`https://instagram.com/${member.instagram.replace(/^@/, '')}`}
+                    href={formatInstagramUrl(member.instagram)}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2 rounded-lg text-neutral-500 hover:text-primary-700 dark:hover:text-primary-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                    className="p-2 rounded-lg text-neutral-500 hover:text-primary-700 dark:hover:text-primary-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                    title="Instagram"
+                    aria-label={`Instagram ${member.name}`}
                   >
-                    <Globe className="h-4 w-4" />
+                    <InstagramIcon className="h-4 w-4" />
                   </a>
                 )}
               </div>
