@@ -59,11 +59,11 @@ export function Footer({
   const logoUrl = footerSettings.logo_url || siteSettings?.logo_url
 
   return (
-    <footer className="bg-neutral-950 text-white pt-16 pb-12 border-t border-neutral-800">
+    <footer className="bg-neutral-950 text-white pt-12 sm:pt-16 pb-12 border-t border-neutral-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-8 pb-12 border-b border-neutral-800 items-start">
+        <div className="grid grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8 pb-12 border-b border-neutral-800 items-start">
           {/* Col 1: Brand & Bio (4 cols) */}
-          <div className="lg:col-span-4 space-y-4">
+          <div className="col-span-2 lg:col-span-4 space-y-4">
             <Link href="/" className="flex items-center gap-3">
               {logoUrl ? (
                 <div className="relative h-10 w-10 shrink-0">
@@ -109,7 +109,7 @@ export function Footer({
           </div>
 
           {/* Col 2: Navigasi Cepat (2 cols) */}
-          <div className="lg:col-span-2 space-y-3">
+          <div className="col-span-1 lg:col-span-2 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-200 font-sans">
               Navigasi Cepat
             </h4>
@@ -129,7 +129,7 @@ export function Footer({
           </div>
 
           {/* Col 3: Program & Kegiatan (2 cols) */}
-          <div className="lg:col-span-2 space-y-3">
+          <div className="col-span-1 lg:col-span-2 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-200 font-sans">
               Program & Rilis
             </h4>
@@ -163,7 +163,7 @@ export function Footer({
           </div>
 
           {/* Col 4: Hubungi Sekretariat (4 cols, Pas di Samping Kanan) */}
-          <div className="lg:col-span-4 p-5 rounded-2xl bg-neutral-900/90 border border-neutral-800 space-y-3.5">
+          <div className="col-span-2 lg:col-span-4 p-4 sm:p-5 rounded-2xl bg-neutral-900/90 border border-neutral-800 space-y-3.5">
             <h4 className="text-xs font-black uppercase tracking-wider text-primary-400 font-sans">
               Hubungi Sekretariat
             </h4>

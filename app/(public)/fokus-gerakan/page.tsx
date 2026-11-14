@@ -12,26 +12,26 @@ export default async function FocusAreasPublicPage() {
   const focusAreas = await getTableData<FocusArea>('focus_areas', dummyFocusAreas)
 
   return (
-    <div className="pt-32 pb-24 bg-white dark:bg-neutral-950">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4 mb-16">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 dark:bg-primary-950 text-primary-700 dark:text-primary-300 text-xs font-extrabold uppercase tracking-wider border border-primary-200/80 dark:border-primary-800">
-          <Target className="h-3.5 w-3.5" />
+    <div className="pt-24 sm:pt-32 pb-16 sm:pb-24 bg-white dark:bg-neutral-950">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3 sm:space-y-4 mb-8 sm:mb-16">
+        <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-primary-50 dark:bg-primary-950 text-primary-700 dark:text-primary-300 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider border border-primary-200/80 dark:border-primary-800">
+          <Target className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
           <span>FOKUS GERAKAN</span>
         </div>
-        <h1 className="text-4xl sm:text-5xl font-serif font-black uppercase text-neutral-900 dark:text-white leading-tight">
+        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-serif font-black uppercase text-neutral-900 dark:text-white leading-tight">
           Pilar Isu & Advokasi Strategis
         </h1>
-        <p className="text-lg text-neutral-600 dark:text-neutral-300 font-sans">
+        <p className="text-sm sm:text-lg text-neutral-600 dark:text-neutral-300 font-sans">
           Ruang kerja advokasi dan diskursus publik kami terpusat pada isu-isu mendasar yang berdampak langsung bagi masyarakat.
         </p>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
           {focusAreas.map((area) => (
             <div
               key={area.id}
-              className="group rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 overflow-hidden shadow-sm hover:shadow-xl hover:border-primary-500 transition-all duration-300 flex flex-col justify-between"
+              className="group rounded-xl sm:rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 overflow-hidden shadow-sm hover:shadow-xl hover:border-primary-500 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
                 {/* Card Photo */}
@@ -47,30 +47,30 @@ export default async function FocusAreasPublicPage() {
                   </div>
                 ) : (
                   <div className="aspect-[16/10] w-full bg-primary-50 dark:bg-neutral-800 flex items-center justify-center text-primary-500">
-                    <Target className="h-10 w-10" />
+                    <Target className="h-8 w-8 sm:h-10 sm:w-10" />
                   </div>
                 )}
 
-                <div className="p-6 space-y-3">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary-600 dark:text-primary-400">
+                <div className="p-3.5 sm:p-6 space-y-1.5 sm:space-y-3">
+                  <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-primary-600 dark:text-primary-400">
                     PILAR FOKUS
                   </span>
-                  <h3 className="text-xl font-serif font-bold text-neutral-900 dark:text-white uppercase group-hover:text-primary-600 transition-colors leading-snug">
+                  <h3 className="text-sm sm:text-xl font-serif font-bold text-neutral-900 dark:text-white uppercase group-hover:text-primary-600 transition-colors leading-snug line-clamp-2">
                     <Link href={`/fokus-gerakan/${area.slug}`}>{area.name}</Link>
                   </h3>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400 font-sans leading-relaxed line-clamp-3">
+                  <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 font-sans leading-relaxed line-clamp-2 sm:line-clamp-3">
                     {area.description}
                   </p>
                 </div>
               </div>
 
-              <div className="p-6 pt-0">
+              <div className="p-3.5 sm:p-6 pt-0">
                 <Link
                   href={`/fokus-gerakan/${area.slug}`}
-                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400 hover:text-primary-700 group-hover:translate-x-1 transition-transform"
+                  className="inline-flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400 hover:text-primary-700 group-hover:translate-x-1 transition-transform"
                 >
                   <span>Pelajari Fokus Ini</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
+                  <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                 </Link>
               </div>
             </div>

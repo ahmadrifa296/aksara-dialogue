@@ -15,23 +15,23 @@ export function CategoryFeedSection({
   gallery,
 }: CategoryFeedSectionProps) {
   return (
-    <section className="py-20 lg:py-28 bg-white dark:bg-neutral-950 border-b border-neutral-200/60 dark:border-neutral-800">
+    <section className="py-12 sm:py-20 lg:py-28 bg-white dark:bg-neutral-950 border-b border-neutral-200/60 dark:border-neutral-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl mb-14 space-y-3">
+        <div className="max-w-3xl mb-8 sm:mb-14 space-y-2 sm:space-y-3">
           <span className="text-xs font-extrabold uppercase tracking-widest text-primary-600 dark:text-primary-400">
             PUBLIKASI & PENGETAHUAN
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-black uppercase text-neutral-900 dark:text-white tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif font-black uppercase text-neutral-900 dark:text-white tracking-tight leading-tight">
             Kategori publikasi & informasi terpadu yang dapat diakses publik.
           </h2>
-          <p className="text-base text-neutral-600 dark:text-neutral-300 font-sans">
+          <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 font-sans">
             Akses terbuka terhadap agenda forum diskusi masyarakat sipil, siaran pers kabar gerakan, dan arsip rekam jejak visual.
           </p>
         </div>
 
         {/* 3 Columns Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10">
           {/* Column 1: AGENDA KEGIATAN */}
           <div className="space-y-6">
             <div className="pb-3 border-b-2 border-primary-600 dark:border-primary-500 flex items-center justify-between">

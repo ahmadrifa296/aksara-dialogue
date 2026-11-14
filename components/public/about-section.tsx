@@ -10,28 +10,28 @@ interface AboutSectionProps {
 
 export function AboutSection({ section, about, values }: AboutSectionProps) {
   return (
-    <section className="py-20 lg:py-28 bg-white dark:bg-neutral-950 border-b border-neutral-200/60 dark:border-neutral-800">
+    <section className="py-12 sm:py-20 lg:py-28 bg-white dark:bg-neutral-950 border-b border-neutral-200/60 dark:border-neutral-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
           {/* Left Column: Heading & Content (7 cols) */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-4 sm:space-y-6">
             <div className="inline-block text-xs font-bold uppercase tracking-widest text-primary-700 dark:text-primary-400">
               {section.subtitle || 'TENTANG KAMI'}
             </div>
 
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-neutral-900 dark:text-white leading-tight">
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-neutral-900 dark:text-white leading-tight">
               {section.title}
             </h2>
 
             <div
-              className="text-base sm:text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed font-sans space-y-4"
+              className="text-sm sm:text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed font-sans space-y-4"
               dangerouslySetInnerHTML={{
                 __html: section.description || about?.content || '',
               }}
             />
 
             {/* Core Values List */}
-            <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="pt-2 sm:pt-4 grid grid-cols-2 gap-3 sm:gap-4">
               {values.slice(0, 4).map((val) => (
                 <div key={val.id} className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-primary-600 dark:text-primary-400 shrink-0 mt-0.5" />

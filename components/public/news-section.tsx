@@ -23,18 +23,18 @@ export function NewsSection({ section, news }: NewsSectionProps) {
   const displayNews = news.slice(0, 6)
 
   return (
-    <section className="py-20 lg:py-28 bg-white dark:bg-neutral-950 border-b border-neutral-100 dark:border-neutral-800">
+    <section className="py-12 sm:py-20 lg:py-28 bg-white dark:bg-neutral-950 border-b border-neutral-100 dark:border-neutral-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
-          <div className="max-w-3xl space-y-3">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-14 gap-4">
+          <div className="max-w-3xl space-y-2 sm:space-y-3">
             <span className="text-xs font-extrabold uppercase tracking-widest text-primary-600 dark:text-primary-400">
               {section.subtitle || 'KABAR & RILIS TERKINI'}
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-black uppercase text-neutral-900 dark:text-white tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif font-black uppercase text-neutral-900 dark:text-white tracking-tight leading-tight">
               {section.title || 'Enam tulisan terbaru dari konten yang sudah terbit.'}
             </h2>
-            <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-300 font-sans font-normal">
+            <p className="text-sm sm:text-lg text-neutral-600 dark:text-neutral-300 font-sans font-normal">
               {section.description ||
                 'Dokumentasi liputan aksi lapangan, pernyataan sikap publik, dan kabar advokasi masyarakat sipil.'}
             </p>
@@ -50,14 +50,14 @@ export function NewsSection({ section, news }: NewsSectionProps) {
         </div>
 
         {/* 6-Card Grid in Orange & White theme */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
           {displayNews.map((item, index) => {
             const thumbnail =
               item.thumbnail || defaultNewsPhotos[index % defaultNewsPhotos.length]
             return (
               <article
                 key={item.id || index}
-                className="group flex flex-col justify-between bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-200/90 dark:border-neutral-800 hover:border-primary-500 hover:shadow-xl transition-all duration-300 shadow-sm"
+                className="group flex flex-col justify-between bg-white dark:bg-neutral-900 rounded-xl sm:rounded-2xl overflow-hidden border border-neutral-200/90 dark:border-neutral-800 hover:border-primary-500 hover:shadow-xl transition-all duration-300 shadow-sm"
               >
                 <div>
                   {/* Photo Thumbnail */}
@@ -72,43 +72,43 @@ export function NewsSection({ section, news }: NewsSectionProps) {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-primary-50 dark:bg-neutral-800">
-                        <Newspaper className="h-10 w-10 text-primary-400" />
+                        <Newspaper className="h-6 w-6 sm:h-10 sm:w-10 text-primary-400" />
                       </div>
                     )}
                   </div>
 
                   {/* Card Content */}
-                  <div className="p-6 space-y-3">
-                    <div className="flex items-center justify-between text-xs font-extrabold text-primary-600 dark:text-primary-400 uppercase tracking-wider">
-                      <span>{item.published_at ? formatDate(item.published_at) : 'Rilis Berita'}</span>
+                  <div className="p-3.5 sm:p-6 space-y-1.5 sm:space-y-3">
+                    <div className="flex items-center justify-between text-[10px] sm:text-xs font-extrabold text-primary-600 dark:text-primary-400 uppercase tracking-wider">
+                      <span className="truncate">{item.published_at ? formatDate(item.published_at) : 'Rilis'}</span>
                       {item.category?.name && (
-                        <span className="text-neutral-500 font-medium">
+                        <span className="text-neutral-500 font-medium truncate hidden sm:inline">
                           {item.category.name}
                         </span>
                       )}
                     </div>
 
-                    <h3 className="text-base sm:text-lg font-serif font-bold text-neutral-900 dark:text-white uppercase group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2 leading-snug">
+                    <h3 className="text-xs sm:text-lg font-serif font-bold text-neutral-900 dark:text-white uppercase group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2 leading-snug">
                       <Link href={`/kegiatan/berita/${item.slug}`}>{item.title}</Link>
                     </h3>
 
-                    <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2 leading-relaxed font-sans">
+                    <p className="text-[11px] sm:text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2 leading-relaxed font-sans">
                       {item.excerpt}
                     </p>
                   </div>
                 </div>
 
-                <div className="px-6 py-4 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between bg-neutral-50/50 dark:bg-neutral-900/50">
-                  <span className="text-xs text-neutral-500 dark:text-neutral-400">
-                    Oleh {item.author || 'Redaksi Aksara'}
+                <div className="px-3.5 py-2 sm:px-6 sm:py-4 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between bg-neutral-50/50 dark:bg-neutral-900/50">
+                  <span className="text-[10px] sm:text-xs text-neutral-500 dark:text-neutral-400 truncate max-w-[80px] sm:max-w-none">
+                    {item.author || 'Aksara'}
                   </span>
 
                   <Link
                     href={`/kegiatan/berita/${item.slug}`}
-                    className="inline-flex items-center gap-1 text-xs font-bold text-primary-600 dark:text-primary-400 hover:text-primary-700 uppercase tracking-wider group-hover:translate-x-0.5 transition-transform"
+                    className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-bold text-primary-600 dark:text-primary-400 hover:text-primary-700 uppercase tracking-wider group-hover:translate-x-0.5 transition-transform"
                   >
                     <span>Baca</span>
-                    <ArrowRight className="h-3.5 w-3.5" />
+                    <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   </Link>
                 </div>
               </article>
