@@ -25,6 +25,26 @@ function checkSupabaseConfigured(): boolean {
   )
 }
 
+function sanitizePayload(data: Record<string, unknown>): Record<string, unknown> {
+  const isUuid = (val: unknown): boolean =>
+    typeof val === 'string' &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(val)
+
+  const cleaned = { ...data }
+
+  // Check known UUID foreign keys
+  const uuidForeignKeys = ['category_id', 'album_id', 'program_id', 'author_id']
+  for (const key of uuidForeignKeys) {
+    if (key in cleaned) {
+      if (!cleaned[key] || !isUuid(cleaned[key])) {
+        cleaned[key] = null
+      }
+    }
+  }
+
+  return cleaned
+}
+
 export async function createRecord(
   table: string,
   data: Record<string, unknown>,
@@ -60,7 +80,8 @@ export async function createRecord(
     }
 
     const supabase = await getDbClient()
-    const { id: potentialId, ...cleanData } = data
+    const cleaned = sanitizePayload(data)
+    const { id: potentialId, ...cleanData } = cleaned
     // Supabase auto-generates UUID, only pass id if it is already a valid UUID
     const insertPayload =
       potentialId && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(potentialId))
@@ -131,14 +152,49 @@ export async function updateRecord(
     }
 
     const supabase = await getDbClient()
+    const cleaned = sanitizePayload(data)
     const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)
 
-    // Jika id bukan UUID (misal data dummy "1", "2"), lakukan insert ke Supabase sebagai baris baru
+    // Jika id bukan UUID (misal data dummy "1", "2")
     if (!isUuid) {
-      const { id: _ignored, ...cleanData } = data
+      const { id: _ignored, ...insertPayload } = cleaned
+
+      // Cek apakah ada record yang cocok berdasarkan slug di Supabase
+      let existingRecordId: string | null = null
+      if (insertPayload.slug && typeof insertPayload.slug === 'string') {
+        const { data: existing } = await supabase
+          .from(table)
+          .select('id')
+          .eq('slug', insertPayload.slug)
+          .maybeSingle()
+        if (existing?.id) {
+          existingRecordId = existing.id
+        }
+      }
+
+      if (existingRecordId) {
+        const { data: updated, error: updateError } = await supabase
+          .from(table)
+          .update(insertPayload)
+          .eq('id', existingRecordId)
+          .select()
+          .single()
+
+        if (updateError) {
+          console.error(`Supabase update error on ${table}:`, updateError)
+          throw new Error(updateError.message || 'Gagal memperbarui data di Supabase')
+        }
+
+        revalidatePaths.forEach((path) => {
+          revalidatePath(path, 'layout')
+          revalidatePath(path, 'page')
+        })
+        return { success: true, message: 'Data berhasil diperbarui di Supabase!', data: updated }
+      }
+
       const { data: inserted, error: insertError } = await supabase
         .from(table)
-        .insert([cleanData])
+        .insert([insertPayload])
         .select()
         .single()
 
@@ -165,7 +221,7 @@ export async function updateRecord(
     }
 
     // ID sudah valid UUID, lakukan update normal
-    const { id: _ignoredId, ...updateData } = data
+    const { id: _ignoredId, ...updateData } = cleaned
     const { data: updated, error } = await supabase
       .from(table)
       .update(updateData)

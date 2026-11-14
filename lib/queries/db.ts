@@ -21,15 +21,23 @@ export async function getTableData<T>(table: string, fallback: T[]): Promise<T[]
   if (isSupabaseConfigured()) {
     try {
       const supabase = await getDbClient()
-      const { data, error } = await supabase.from(table).select('*').order('sort_order', { ascending: true })
-      if (!error && data && data.length > 0) return data as unknown as T[]
-    } catch {
-      // Fallback if table doesn't have sort_order
-      try {
-        const supabase = await getDbClient()
-        const { data, error } = await supabase.from(table).select('*')
-        if (!error && data && data.length > 0) return data as unknown as T[]
-      } catch {}
+      
+      // Try order by sort_order
+      let res = await supabase.from(table).select('*').order('sort_order', { ascending: true })
+      
+      // If error (e.g. column sort_order does not exist), try created_at or un-ordered
+      if (res.error) {
+        res = await supabase.from(table).select('*').order('created_at', { ascending: false })
+      }
+      if (res.error) {
+        res = await supabase.from(table).select('*')
+      }
+
+      if (!res.error && res.data && res.data.length > 0) {
+        return res.data as unknown as T[]
+      }
+    } catch (e) {
+      console.error(`Error fetching table ${table} from Supabase:`, e)
     }
   }
 

@@ -59,3 +59,4 @@ export function formatLinkedinUrl(handleOrUrl?: string | null): string {
   const clean = trimmed.replace(/^in\//, '').replace(/\/+$/, '')
   return `https://www.linkedin.com/in/${clean}`
 }
+

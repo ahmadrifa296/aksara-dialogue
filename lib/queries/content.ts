@@ -299,27 +299,27 @@ export const dummyPrograms: Program[] = [
 
 export const dummyNews: News[] = [
   {
-    id: '1',
+    id: '5ce36b09-4bfc-4b02-a965-0337fe06c710',
     title: 'Aksara Dialogue Rilis Rekomendasi Keterbukaan Data Publik 2026',
     slug: 'aksara-dialogue-rilis-rekomendasi-keterbukaan-data-publik-2026',
     excerpt: 'Dokumen rekomendasi kebijakan telah diserahkan secara resmi untuk memperkuat transparansi informasi anggaran daerah.',
     content: `
       <p><strong>Jakarta</strong>, Aksara Dialogue secara resmi menyerahkan naskah rekomendasi kebijakan keterbukaan data anggaran publik kepada kementerian terkait dan perwakilan komisi legislatif.</p>
       <p>Naskah ini disusun berdasarkan hasil audit sosial di 15 kabupaten/kota yang menunjukkan pentingnya digitalisasi informasi anggaran yang mudah diakses dan dipahami oleh warga biasa.</p>
-      <p>"Keterbukaan informasi bukan sekadar kewajiban administratif, melainkan hak asasi warga untuk memastikan setiap rupiah uang rakyat digunakan secara tepat sasaran," ungkap Dr. Ahmad Fauzi, Direktur Eksekutif Aksara Dialogue.</p>
+      <p>"Keterbukaan informasi bukan sekadar kewajiban administratif, melainkan hak asasi warga untuk memastikan setiap rupiah uang rakyat digunakan secara tepat sasaran," ungkap Muhamad Syamsul Maarif, Direktur Eksekutif Aksara Dialogue.</p>
     `,
     thumbnail: null,
     author: 'Tim Komunikasi Aksara',
-    category_id: '1',
+    category_id: 'e15f9ced-4e8a-42c5-8a4f-32f6e7789059',
     tags: ['Transparansi', 'Advokasi', 'Kebijakan'],
     status: 'published',
     published_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    category: { id: '1', name: 'Rilis Pers', slug: 'rilis-pers', is_active: true, sort_order: 1, created_at: '' },
+    category: { id: 'e15f9ced-4e8a-42c5-8a4f-32f6e7789059', name: 'Rilis Pers', slug: 'rilis-pers', is_active: true, sort_order: 1, created_at: '' },
   },
   {
-    id: '2',
+    id: '870ddd65-8cca-4fbf-a79d-f28a59e6f433',
     title: 'Ratusan Peserta Hadiri Diskusi Meja Bundar: Masa Depan Keadilan Iklim',
     slug: 'ratusan-peserta-hadiri-diskusi-meja-bundar-keadilan-iklim',
     excerpt: 'Pertemuan ini menghasilkan piagam kesepahaman lintas organisasi masyarakat sipil untuk mitigasi bencana ekologis.',
@@ -329,13 +329,13 @@ export const dummyNews: News[] = [
     `,
     thumbnail: null,
     author: 'Redaksi Dialogue',
-    category_id: '2',
+    category_id: '3a7dd63e-e2f6-4749-b697-315052854a63',
     tags: ['Iklim', 'Diskusi', 'Komunitas'],
     status: 'published',
     published_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    category: { id: '2', name: 'Liputan Kegiatan', slug: 'liputan-kegiatan', is_active: true, sort_order: 2, created_at: '' },
+    category: { id: '3a7dd63e-e2f6-4749-b697-315052854a63', name: 'Liputan Kegiatan', slug: 'liputan-kegiatan', is_active: true, sort_order: 2, created_at: '' },
   },
 ]
 
