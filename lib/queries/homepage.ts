@@ -584,6 +584,30 @@ export async function getHomepageData(): Promise<HomepageData> {
       .limit(3)
     if (eventsData && eventsData.length > 0) result.events = eventsData
 
+    // Fetch Albums / Gallery from Supabase
+    let albumsQuery = await supabase
+      .from('albums')
+      .select('*')
+      .eq('is_published', true)
+      .order('created_at', { ascending: false })
+      .limit(8)
+    if (albumsQuery.error) {
+      albumsQuery = await supabase.from('albums').select('*').eq('is_published', true).limit(8)
+    }
+
+    if (!albumsQuery.error && albumsQuery.data && albumsQuery.data.length > 0) {
+      result.gallery = albumsQuery.data.map((alb, i) => ({
+        id: alb.id || String(i + 1),
+        album_id: alb.id || '1',
+        image_url: alb.cover_image || '',
+        caption: alb.description || alb.title,
+        sort_order: i + 1,
+        is_featured: true,
+        created_at: alb.event_date || alb.created_at || '',
+        album_title: alb.title,
+      }))
+    }
+
     return result
   } catch {
     return result
