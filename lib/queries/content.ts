@@ -163,14 +163,15 @@ export const dummyValues: Value[] = [
 
 export const dummyFocusAreas: FocusArea[] = [
   {
-    id: '1',
-    name: 'Keadilan Sosial & HAM',
+    id: '57826379-5902-4f35-9afb-708c82237f2b',
+    name: 'Keadilan Sosial & Hak Asasi Manusia',
     slug: 'keadilan-sosial-ham',
-    description: 'Mengawal perlindungan hak-hak dasar warga, penguatan kelompok marjinal, serta pemerataan akses keadilan sosial di ruang publik.',
+    description: 'Mengawal perlindungan hak asasi warga, penguatan kelompok marjinal, serta pemerataan akses keadilan sosial di ruang publik.',
     content: `
-      <p>Pilar ini berfokus pada advokasi perlindungan hak-hak asasi warga negara, pengentasan diskriminasi berbasis gender dan latar belakang sosial, serta pendampingan hukum dan sosial bagi komunitas yang rentan termarjinalkan.</p>
+      <p>Pilar Keadilan Sosial dan Hak Asasi Manusia berkomitmen mengawal perlindungan martabat kemanusiaan dan penegakan hak-hak dasar warga negara. Kami fokus pada pendampingan komunitas rentan, pengentasan diskriminasi sosial, serta penguatan kapasitas hukum warga dalam mempertahankan ruang hidupnya.</p>
+      <p>Melalui riset aksi partisipatif dan advokasi kebijakan berbasis bukti, kami mendorong hadirnya regulasi yang adil, inklusif, dan berpihak pada kelompok yang kerap terpinggirkan dari sistem pengambilan keputusan formal.</p>
     `,
-    image_url: 'https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=800&auto=format&fit=crop&q=80',
+    image_url: 'https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=1200&auto=format&fit=crop&q=80',
     icon: 'Users',
     sort_order: 1,
     is_active: true,
@@ -178,14 +179,15 @@ export const dummyFocusAreas: FocusArea[] = [
     updated_at: '',
   },
   {
-    id: '2',
-    name: 'Demokrasi & Kebijakan',
+    id: 'c5a02711-07bf-4cc4-b8ed-92a83d0d0929',
+    name: 'Demokrasi & Transparansi Kebijakan',
     slug: 'demokrasi-transparansi-kebijakan',
-    description: 'Mendorong reformasi institusional, akuntabilitas anggaran publik, serta partisipasi aktif warga dalam perumusan undang-undang.',
+    description: 'Mendorong akuntabilitas anggaran publik, reformasi tata kelola pemerintahan, serta perluasan ruang partisipasi warga.',
     content: `
-      <p>Pilar Demokrasi berfokus pada pengawasan independen terhadap tata kelola pemerintahan, audit sosial terhadap alokasi anggaran publik, dan perluasan ruang partisipasi warga.</p>
+      <p>Demokrasi yang sehat mensyaratkan transparansi institusi publik dan keterlibatan masyarakat yang bermakna dalam setiap siklus kebijakan. Pilar ini berfokus pada pengawasan independen terhadap tata kelola anggaran daerah dan nasional, keterbukaan informasi publik, serta reformasi birokrasi.</p>
+      <p>Kami memfasilitasi forum musyawarah warga, dialog multi-pemangku kepentingan, dan kajian kritis terhadap rancangan perundang-undangan guna memastikan suara publik menjadi pertimbangan utama pembuat kebijakan.</p>
     `,
-    image_url: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&auto=format&fit=crop&q=80',
+    image_url: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1200&auto=format&fit=crop&q=80',
     icon: 'Building2',
     sort_order: 2,
     is_active: true,
@@ -193,46 +195,33 @@ export const dummyFocusAreas: FocusArea[] = [
     updated_at: '',
   },
   {
-    id: '3',
-    name: 'Wilayah Kelola Rakyat',
-    slug: 'wilayah-kelola-rakyat',
-    description: 'Perlindungan wilayah kelola masyarakat adat, kedaulatan tanah warga, dan keadilan agraria yang berpihak pada komunitas lokal.',
+    id: 'f734de11-b25d-4f1e-9d15-83828aaa0307',
+    name: 'Kelestarian Ekologis & Keadilan Iklim',
+    slug: 'kelestarian-ekologis-keadilan-iklim',
+    description: 'Advokasi transisi energi yang berkeadilan, perlindungan wilayah kelola rakyat, serta kepastian hukum terhadap kelestarian alam.',
     content: `
-      <p>Mengadvokasi pengakuan wilayah adat, penyelesaian konflik agraria struktural, dan pemulihan kedaulatan ekonomi masyarakat atas ruang hidupnya.</p>
+      <p>Krisis ekologis dan perubahan iklim memberi dampak terberat bagi komunitas akar rumput, nelayan tradisional, dan masyarakat adat. Pilar ini mengawal agenda transisi energi yang berkeadilan gender dan sosial, perlindungan bentang alam esensial, serta advokasi pemulihan ruang hidup yang rusak akibat eksploitasi ekstraktif.</p>
+      <p>Bersama koalisi masyarakat sipil dan komunitas lokal, kami mendesak penegakan hukum lingkungan yang tegas serta perencanaan tata ruang yang berorientasi pada daya dukung ekologis jangka panjang.</p>
     `,
-    image_url: 'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=800&auto=format&fit=crop&q=80',
-    icon: 'Scale',
+    image_url: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&auto=format&fit=crop&q=80',
+    icon: 'TreePine',
     sort_order: 3,
     is_active: true,
     created_at: '',
     updated_at: '',
   },
   {
-    id: '4',
-    name: 'Ekologis & Keadilan Iklim',
-    slug: 'ekologis-keadilan-iklim',
-    description: 'Advokasi transisi energi yang adil, perlindungan hutan dan pesisir, serta penegakan hukum terhadap kejahatan perusak lingkungan.',
+    id: 'f9fc4a9b-6fdc-4c25-8f72-e12b8da73e77',
+    name: 'Literasi Kritis & Kebebasan Berekspresi',
+    slug: 'literasi-kritis-kebebasan-berekspresi',
+    description: 'Melindungi hak bersuara di ruang digital, jurnalisme warga yang berintegritas, serta peningkatan literasi informasi publik.',
     content: `
-      <p>Fokus ini mengawal kebijakan transisi energi bersih yang berkeadilan, perlindungan ekosistem alami dari eksploitasi perusak, dan edukasi krisis iklim.</p>
+      <p>Ruang sipil digital menghadapi tantangan ganda: maraknya polarisasi serta pembatasan kebebasan berekspresi. Pilar Literasi Kritis mendedikasikan kerja pada edukasi verifikasi data, jurnalisme publik yang beretika, serta advokasi keamanan digital bagi pembela hak asasi manusia.</p>
+      <p>Kami menyelenggarakan lokakarya penulisan, diseminasi riset populer, dan forum diskusi berkala untuk menyemai budaya dialog yang rasional, kritis, dan berakar pada empati sosial.</p>
     `,
-    image_url: 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=800&auto=format&fit=crop&q=80',
-    icon: 'TreePine',
+    image_url: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1200&auto=format&fit=crop&q=80',
+    icon: 'BookOpen',
     sort_order: 4,
-    is_active: true,
-    created_at: '',
-    updated_at: '',
-  },
-  {
-    id: '5',
-    name: 'Pulihkan Ruang Publik Indonesia',
-    slug: 'pulihkan-ruang-publik',
-    description: 'Konsolidasi nasional warga dan jejaring masyarakat sipil untuk memulihkan kedaulatan ruang dialog dan tata kelola berkeadilan.',
-    content: `
-      <p>Gerakan bersama lintas komunitas untuk merebut kembali ruang publik yang bebas dari intimidasi dan berpihak seutuhnya pada kemaslahatan rakyat.</p>
-    `,
-    image_url: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1000&auto=format&fit=crop&q=80',
-    icon: 'Sparkles',
-    sort_order: 5,
     is_active: true,
     created_at: '',
     updated_at: '',

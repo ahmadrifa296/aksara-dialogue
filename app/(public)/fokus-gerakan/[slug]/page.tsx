@@ -3,7 +3,7 @@ import { dummyFocusAreas } from '@/lib/queries/content'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, Target, Sparkles } from 'lucide-react'
+import { ArrowLeft, Target, MessageSquare } from 'lucide-react'
 import type { FocusArea } from '@/types'
 
 export const dynamic = 'force-dynamic'
@@ -72,7 +72,7 @@ export default async function FocusAreaDetailPage({
         {/* Collaboration Banner */}
         <div className="p-8 rounded-2xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-4 mt-12">
           <div className="flex items-center gap-2 text-primary-600">
-            <Sparkles className="h-5 w-5" />
+            <MessageSquare className="h-5 w-5" />
             <h3 className="text-xl font-bold font-serif text-neutral-900 dark:text-white">
               Ingin Berkolaborasi di Isu Ini?
             </h3>

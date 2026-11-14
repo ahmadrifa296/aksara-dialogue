@@ -27,8 +27,8 @@ const iconOptions = [
   { value: 'Building2', label: 'Building (Politik / Kebijakan)' },
   { value: 'Scale', label: 'Scale (Hukum & Agraria)' },
   { value: 'TreePine', label: 'TreePine (Ekologis / Iklim)' },
+  { value: 'BookOpen', label: 'BookOpen (Literasi & Media)' },
   { value: 'Heart', label: 'Heart (Kemanusiaan)' },
-  { value: 'Sparkles', label: 'Sparkles (Inovasi & Gerakan)' },
 ]
 
 export function FocusManager({ initialFocusAreas }: FocusManagerProps) {
