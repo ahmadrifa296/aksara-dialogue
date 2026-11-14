@@ -27,6 +27,7 @@ export default async function PublicLayout({ children }: { children: ReactNode }
         footerSettings={footerSettings}
         socialLinks={socialLinks}
         navigations={navigations}
+        siteSettings={siteSettings}
       />
     </div>
   )

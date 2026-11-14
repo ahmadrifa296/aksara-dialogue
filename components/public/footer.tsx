@@ -8,12 +8,13 @@ import {
   ArrowUpRight,
   Globe,
 } from 'lucide-react'
-import type { FooterSettings, SocialLink, Navigation } from '@/types'
+import type { FooterSettings, SocialLink, Navigation, SiteSettings } from '@/types'
 
 interface FooterProps {
   footerSettings: FooterSettings
   socialLinks: SocialLink[]
   navigations: Navigation[]
+  siteSettings?: SiteSettings
 }
 
 function SocialIcon({ platform }: { platform: string }) {
@@ -49,7 +50,14 @@ function SocialIcon({ platform }: { platform: string }) {
   return <Globe className="h-4 w-4" />
 }
 
-export function Footer({ footerSettings, socialLinks, navigations }: FooterProps) {
+export function Footer({
+  footerSettings,
+  socialLinks,
+  navigations,
+  siteSettings,
+}: FooterProps) {
+  const logoUrl = footerSettings.logo_url || siteSettings?.logo_url
+
   return (
     <footer className="bg-neutral-950 text-white pt-16 pb-12 border-t border-neutral-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -57,11 +65,11 @@ export function Footer({ footerSettings, socialLinks, navigations }: FooterProps
           {/* Col 1: Brand & Bio (4 cols) */}
           <div className="lg:col-span-4 space-y-4">
             <Link href="/" className="flex items-center gap-3">
-              {footerSettings.logo_url ? (
+              {logoUrl ? (
                 <div className="relative h-10 w-10 shrink-0">
                   <Image
-                    src={footerSettings.logo_url}
-                    alt="Logo"
+                    src={logoUrl}
+                    alt={siteSettings?.site_name || 'Logo'}
                     fill
                     className="object-contain rounded-xl"
                     unoptimized
@@ -74,7 +82,7 @@ export function Footer({ footerSettings, socialLinks, navigations }: FooterProps
               )}
               <div>
                 <span className="text-xl font-black font-serif tracking-tight text-white block">
-                  Aksara Dialogue
+                  {siteSettings?.site_name || 'Aksara Dialogue'}
                 </span>
                 <span className="text-[10px] tracking-widest text-primary-400 font-sans font-bold uppercase">
                   Suara Publik · Ruang Dialog
