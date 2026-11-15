@@ -22,7 +22,10 @@ export function SearchInput({
   const [internal, setInternal] = useState(value)
 
   useEffect(() => {
-    setInternal(value)
+    const handle = requestAnimationFrame(() => {
+      setInternal(value)
+    })
+    return () => cancelAnimationFrame(handle)
   }, [value])
 
   useEffect(() => {

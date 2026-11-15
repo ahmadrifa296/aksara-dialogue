@@ -32,7 +32,7 @@ export default async function AboutProfilePage() {
             <Quote className="h-16 w-16 text-white/10 absolute top-4 right-4" />
             <div className="relative z-10 space-y-4">
               <p className="text-xl sm:text-2xl font-serif font-semibold italic text-primary-50 leading-relaxed">
-                "{about.quote}"
+                &ldquo;{about.quote}&rdquo;
               </p>
               <div className="pt-2">
                 <p className="text-sm font-bold text-white tracking-wide">

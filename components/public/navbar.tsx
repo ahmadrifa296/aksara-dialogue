@@ -19,8 +19,11 @@ export function Navbar({ navigations, siteSettings }: NavbarProps) {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
 
   useEffect(() => {
-    setMobileMenuOpen(false)
-    setActiveDropdown(null)
+    const handle = requestAnimationFrame(() => {
+      setMobileMenuOpen(false)
+      setActiveDropdown(null)
+    })
+    return () => cancelAnimationFrame(handle)
   }, [pathname])
 
   const toggleDropdown = (id: string) => {

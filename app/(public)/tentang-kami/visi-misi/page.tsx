@@ -35,7 +35,7 @@ export default async function VisiMisiPage() {
             <span>Visi Utama</span>
           </div>
           <p className="text-2xl sm:text-3xl font-serif font-semibold leading-relaxed text-primary-50">
-            "{visi.content}"
+            &ldquo;{visi.content}&rdquo;
           </p>
         </div>
 

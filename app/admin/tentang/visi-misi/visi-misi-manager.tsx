@@ -151,7 +151,7 @@ export function VisiMisiManager({ initialItems }: VisiMisiManagerProps) {
           visiList.map((v) => (
             <div key={v.id} className="p-4 rounded-lg bg-neutral-50 dark:bg-neutral-800/40 border border-neutral-200 dark:border-neutral-800 flex items-start justify-between gap-4">
               <p className="text-base font-serif font-medium text-neutral-900 dark:text-white leading-relaxed">
-                "{v.content}"
+                &ldquo;{v.content}&rdquo;
               </p>
               <div className="flex items-center gap-1 shrink-0">
                 <button

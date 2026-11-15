@@ -66,7 +66,7 @@ export function AboutSection({ section, about, values }: AboutSectionProps) {
               <Quote className="h-14 w-14 text-white/20 absolute top-6 right-6" />
               <div className="relative z-10 space-y-6">
                 <p className="text-xl sm:text-2xl font-serif font-semibold leading-snug italic text-white">
-                  "{about?.quote || 'Perubahan dimulai dari ruang dialog yang terbuka dan keadilan yang diperjuangkan bersama.'}"
+                  &ldquo;{about?.quote || 'Perubahan dimulai dari ruang dialog yang terbuka dan keadilan yang diperjuangkan bersama.'}&rdquo;
                 </p>
                 <div className="pt-4 border-t border-white/20">
                   <p className="text-sm font-bold text-white tracking-wide">
