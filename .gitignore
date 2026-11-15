@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local documentation & IG tools (not deployed to Vercel)
+/local-docs
+ig-carousel.html
